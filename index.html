@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Manager</title>
+    <style>
+        body { font-family: Arial; background: #f4f4f4; padding: 20px; }
+        h1, h2 { color: #333; }
+        input, select, button { padding: 10px; margin: 5px 0; }
+        .task-item { background: #fff; padding: 10px; margin: 5px 0; border-radius: 5px; display: flex; justify-content: space-between; }
+        .done { text-decoration: line-through; color: gray; }
+        .delete-btn { background: #f44336; color: white; border: none; padding: 5px 10px; }
+        .toggle-btn { background: #2196F3; color: white; border: none; padding: 5px 10px; margin-right: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Task Manager</h1>
+
+    <form method="POST">
+        <input type="text" name="content" placeholder="Новая задача" required>
+        <select name="category">
+            <option value="Дом">Дом</option>
+            <option value="Учёба">Учёба</option>
+            <option value="Работа">Работа</option>
+            <option value="Другое">Другое</option>
+        </select>
+        <button type="submit">Добавить</button>
+    </form>
+
+    <h2>Активные задачи:</h2>
+    {% for task in tasks_todo %}
+        <div class="task-item">
+            <span>{{ task.content }} — <em>{{ task.category }}</em></span>
+            <span>
+                <a href="/toggle/{{ task.id }}"><button class="toggle-btn">Сделано</button></a>
+                <a href="/delete/{{ task.id }}"><button class="delete-btn">Удалить</button></a>
+            </span>
+        </div>
+    {% endfor %}
+
+    <h2>Выполненные задачи:</h2>
+    {% for task in tasks_done %}
+        <div class="task-item">
+            <span class="done">{{ task.content }} — <em>{{ task.category }}</em></span>
+            <span>
+                <a href="/toggle/{{ task.id }}"><button class="toggle-btn">Не сделано</button></a>
+                <a href="/delete/{{ task.id }}"><button class="delete-btn">Удалить</button></a>
+            </span>
+        </div>
+    {% endfor %}
+</body>
+</html>
